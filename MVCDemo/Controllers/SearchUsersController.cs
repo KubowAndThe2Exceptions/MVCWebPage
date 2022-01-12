@@ -17,6 +17,8 @@ namespace MVCDemo.Controllers
         // GET: SearchUsers
         public ActionResult Index()
         {
+            var userIndex = new List<ApplicationUser>();
+            
             //try both designs
             using (var context = new ApplicationDbContext())
             {
@@ -26,9 +28,14 @@ namespace MVCDemo.Controllers
                 // var altusers = context.Users.ToList();
 
                 var users = userManager.Users.ToList();
+
+                foreach (var user in users)
+                {
+                    userIndex.Add(user);
+                }
             }
 
-            return View();
+            return View(userIndex);
         }
     }
 }
