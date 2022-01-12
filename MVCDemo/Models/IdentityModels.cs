@@ -35,5 +35,7 @@ namespace MVCDemo.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<MVCDemo.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
 }
