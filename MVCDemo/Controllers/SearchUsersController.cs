@@ -1,4 +1,6 @@
-﻿using MVCDemo.Models;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using MVCDemo.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,16 +11,24 @@ namespace MVCDemo.Controllers
 {
     public class SearchUsersController : Controller
     {
-        private ApplicationDbContext _appDb;
-        public SearchUsersController(ApplicationDbContext appDb)
+        public SearchUsersController()
         {
-            _appDb = appDb;
         }
         // GET: SearchUsers
         public ActionResult Index()
         {
+            //try both designs
+            using (var context = new ApplicationDbContext())
+            {
+                var userStore = new UserStore<ApplicationUser>(context);
+                var userManager = new UserManager<ApplicationUser>(userStore);
 
-            return View(_appDb.Users.ToList());
+                // var altusers = context.Users.ToList();
+
+                var users = userManager.Users.ToList();
+            }
+
+            return View();
         }
     }
 }
