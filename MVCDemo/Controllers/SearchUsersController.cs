@@ -17,22 +17,23 @@ namespace MVCDemo.Controllers
         // GET: SearchUsers
         public ActionResult Index()
         {
-            var userIndex = new List<ApplicationUser>();
+            var context = new ApplicationDbContext();
+            var userIndex = context.Users.ToList();
             
             //try both designs
-            using (var context = new ApplicationDbContext())
+            //using (var context = new ApplicationDbContext())
             {
-                var userStore = new UserStore<ApplicationUser>(context);
-                var userManager = new UserManager<ApplicationUser>(userStore);
+                //var userStore = new UserStore<ApplicationUser>(context);
+                //var userManager = new UserManager<ApplicationUser>(userStore);
 
-                // var altusers = context.Users.ToList();
+                //var altusers = context.Users.ToList();
 
-                var users = userManager.Users.ToList();
+                //var users = userManager.Users.ToList();
 
-                foreach (var user in users)
-                {
-                    userIndex.Add(user);
-                }
+                //foreach (var user in altusers)
+                //{
+                    //userIndex.Add(user);
+                //}
             }
 
             return View(userIndex);
