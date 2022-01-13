@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 
 namespace MVCDemo.Controllers
 {
@@ -15,12 +16,20 @@ namespace MVCDemo.Controllers
         {
         }
         // GET: SearchUsers
-        public ActionResult Index()
+        public ViewResult Index(int? page)
         {
             var context = new ApplicationDbContext();
             var userIndex = context.Users.ToList();
-            
-            return View(userIndex);
+
+            int pageNumber = 1;
+            int pageSize = 1;
+
+            if (page.HasValue)
+            {
+                pageNumber = (int)page;
+            }
+
+            return View(userIndex.ToPagedList(pageNumber, pageSize));
         }
     }
 }
