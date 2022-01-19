@@ -16,10 +16,15 @@ namespace MVCDemo.Controllers
         {
         }
         // GET: SearchUsers
-        public ViewResult Index(int? page)
+        public ViewResult Index(int? page, string searchInput)
         {
             var context = new ApplicationDbContext();
             var userIndex = context.Users.ToList();
+
+            if (!String.IsNullOrWhiteSpace(searchInput))
+            {
+                userIndex = userIndex.Where(u => u.FirstName.Contains(searchInput)).ToList();
+            }
 
             int pageNumber = 1;
             int pageSize = 1;
